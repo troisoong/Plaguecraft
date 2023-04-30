@@ -1,3 +1,3 @@
 # Plaguecraft
 
-Code used for my Senior Honours Dissertation "Infectious Disease Modelling in Minecraft".
+This repository is for the code used for my Senior Honour's Project "Infectious Disease Modelling in Minecraft".
