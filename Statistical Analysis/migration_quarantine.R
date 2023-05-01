@@ -8,8 +8,6 @@ library(ggplot2)
 library(lme4)
 library(lmerTest)
 library(car)
-#this allows table reorganisation
-library(dplyr)
 #allows plotting of residuals
 library(ggResidpanel)
 #for customising graph colour
