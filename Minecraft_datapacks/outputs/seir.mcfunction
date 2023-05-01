@@ -26,3 +26,9 @@ scoreboard players operation infectious Outputs = infectious_dummy Outputs
 scoreboard players set recovered_dummy Outputs 0
 execute as @e[type=villager,tag=immune] at @s run scoreboard players add recovered_dummy Outputs 1
 scoreboard players operation recovered Outputs = recovered_dummy Outputs
+
+#signpost to display these values
+data merge block ~-1 ~ ~ {Text1:'[{"text":"Susceptible:"},{"score":{"objective":"Outputs","name":"susceptible"}}]'}
+data merge block ~-1 ~ ~ {Text2:'[{"text":"Exposed:"},{"score":{"objective":"Outputs","name":"exposed"}}]'}
+data merge block ~-1 ~ ~ {Text3:'[{"text":"Infected:"},{"score":{"objective":"Outputs","name":"infectious"}}]'}
+data merge block ~-1 ~ ~ {Text4:'[{"text":"Recovered:"},{"score":{"objective":"Outputs","name":"recovered"}}]'}
