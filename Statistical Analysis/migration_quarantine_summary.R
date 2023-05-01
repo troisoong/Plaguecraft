@@ -12,6 +12,8 @@ library(car)
 library(dplyr)
 #allows plotting of residuals
 library(ggResidpanel)
+#for customising graph colour
+library(RColorBrewer)
 
 #load data
 migrationdata <- read.csv("(file pathway)",
@@ -21,8 +23,7 @@ migrationdata <- read.csv("(file pathway)",
 migrationdata$run <- as.factor(migrationdata$run)
 migrationdata$timepoint <- as.factor(migrationdata$timepoint)
 
-"create model with structure (values of interest, data table, random effects, 
-autocorrelation)" 
+#create model using glmer to correct for binomial distribution
 migrationmodel <- lm(peak_prop ~ teleporters + 
                           infection_migration + teleporters*infection_migration, 
                         data = migrationdata, family = binomial)
