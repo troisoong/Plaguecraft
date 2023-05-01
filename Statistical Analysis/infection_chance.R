@@ -30,7 +30,7 @@ ratemodel <- glmer(cbind(infected,non_infected) ~ -exp(chance) +
 #-exp found to be much better fit, otherwise crosses x-axis. Also gives higher p-value so less residuals.
 
 #perform anova to test              
-Anova(ratemodel)
+Anova(ratemodel,type=3)
 #check summaries
 summary(ratemodel) 
 #standard residuals
