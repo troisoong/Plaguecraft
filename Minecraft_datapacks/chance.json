@@ -1,3 +1,4 @@
+#example of json file where chance values can be stored
 {
 	"condition":"minecraft:random_chance", 
 	"chance": 0.000833
