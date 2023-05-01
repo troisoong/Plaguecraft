@@ -28,6 +28,7 @@ execute as @e[type=villager,tag=immune] at @s run scoreboard players add recover
 scoreboard players operation recovered Outputs = recovered_dummy Outputs
 
 #signpost to display these values
+setblock ~-1 ~ ~ crimson_sign[rotation=4]{Color:"yellow",Text1:'{"text":"Population Data"}'}
 data merge block ~-1 ~ ~ {Text1:'[{"text":"Susceptible:"},{"score":{"objective":"Outputs","name":"susceptible"}}]'}
 data merge block ~-1 ~ ~ {Text2:'[{"text":"Exposed:"},{"score":{"objective":"Outputs","name":"exposed"}}]'}
 data merge block ~-1 ~ ~ {Text3:'[{"text":"Infected:"},{"score":{"objective":"Outputs","name":"infectious"}}]'}
