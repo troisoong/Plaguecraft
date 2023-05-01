@@ -47,5 +47,6 @@ teleporters:infection_migration  1 0.01537 0.0153709  1.2203 0.2794
 Residuals                       26 0.32748 0.0125956    
 "
 #no significant results
+#residuals suggets quite a lot of overdistribuition and QQ plot not correcting for binomial distribuition, but there isn't a significant result anyway
 
 #graphs plotted with ggplot
