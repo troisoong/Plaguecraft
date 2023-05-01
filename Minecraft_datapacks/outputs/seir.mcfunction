@@ -1,4 +1,5 @@
-#This code counts the number of individuals currently at each stage of the infection using scoreboards. This information can then be displayed on signposts or on player screens
+#This code counts the number of individuals currently at each stage of the infection using scoreboards. 
+#This information can then be displayed on signposts or on player screens
 
 #population count
 scoreboard players set population_dummy Outputs 0
