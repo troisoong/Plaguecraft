@@ -40,7 +40,7 @@ execute as @e[type=villager,tag=!disease_dead] at @s if score death Parameter = 
 execute as @e[type=villager,tag=!disease_dead] at @s if score death Parameter = 4 Parameter if predicate variable:20_min run tag @s add age_dead
 execute as @e[type=villager,tag=!disease_dead] at @s if score death Parameter = 5 Parameter if predicate variable:25_min run tag @s add age_dead
 #run function to print gravestone, which will also kill them
-execute as @e[type=villager,tag=age_dead,tag=!disease_dead] at @s run function (function name)
+execute as @e[type=villager,tag=age_dead,tag=!disease_dead] at @s run function (file location):death_age
 
 
 #disease related death rate is relient on disease length, so must account for both
@@ -75,4 +75,4 @@ execute as @e[type=villager,tag=infectious] at @s if score disease_death Paramet
 execute as @e[type=villager,tag=infectious] at @s if score disease_death Parameter = 5 Parameter if score disease_length Parameter = 4 Parameter if variable:20_per if variable:5_min run tag @s add disease_dead
 execute as @e[type=villager,tag=infectious] at @s if score disease_death Parameter = 5 Parameter if score disease_length Parameter = 5 Parameter if variable:20_per if variable:10_min run tag @s add disease_dead
 #run function to die and print gravestone
-execute as @e[type=villager,tag=disease_dead] at @s run function (function name)
+execute as @e[type=villager,tag=disease_dead] at @s run function (file location):death_disease
