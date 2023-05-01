@@ -30,20 +30,22 @@ migrationmodel <- glmer(cbind(infected,non_infected) ~ teleporters +
                      data = migrationdata, family = binomial)
 
 #perform anova to test              
-Anova(migrationmodel)
+Anova(migrationmodel,type=3)
 #check summaries
 summary(migrationmodel) 
 #standard residuals
 resid_panel(migrationmodel)
 
 #output:
-"Analysis of Deviance Table (Type II Wald chisquare tests)
+"Analysis of Deviance Table (Type III Wald chisquare tests)
 
 Response: cbind(infected, non_infected)
-                                 Chisq Df Pr(>Chisq)  
-teleporters                     0.2554  1    0.61328  
-infection_migration             0.0228  1    0.87995  
-teleporters:infection_migration 4.2684  1    0.03883 *"
+                                  Chisq Df Pr(>Chisq)    
+(Intercept)                     29.1792  1  6.598e-08 ***
+teleporters                      1.3171  1    0.25111    
+infection_migration              2.5008  1    0.11379    
+teleporters:infection_migration  4.2684  1    0.03883 *"
 #significant interaction detected
+#overdispursed but standard error not small QQ plot not correcting for binomila family, rest of residual plots fine
 
 #graphs plotted with ggplot
