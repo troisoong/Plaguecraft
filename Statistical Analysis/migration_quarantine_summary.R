@@ -11,7 +11,7 @@ library(car)
 library(ggResidpanel)
 
 #load data
-migrationdata <- read.csv("C:\\Users\\perri\\Documents\\R_Data\\migration_summary.csv",
+migrationdata <- read.csv("(file pathway)",
                           stringsAsFactors = TRUE, header=TRUE)
 
 #save timepoint and run as factors
@@ -24,25 +24,25 @@ migrationmodel <- lm(peak_prop ~ teleporters +
                           infection_migration + teleporters*infection_migration, 
                         data = migrationdata, family = binomial)
 
-
-"-exp because fits data better (proportion dosn't go below zero and residuals a 
-TINY bit better, 0.309321 vs. 0.309403). -log worse fit with residuals of 
-0.3411896.
-"
-
-" 
-corAR1 and corCAR1 give same output
-Works because running the model without the run random effect and without 
-accounting for autocorellation makes p-value MUCH more signif
-#run anova to text for correlation"                
+#perform anova to test               
 anova(migrationmodel)
-
-summary(migrationmodel)
-
-
-#try to check assumptions? 
+#check summaries
+summary(migrationmodel) 
 #standard residuals
 resid_panel(migrationmodel)
+
+#output
+"
+Analysis of Variance Table
+
+Response: peak_prop
+                                Df  Sum Sq   Mean Sq F value Pr(>F)
+teleporters                      1 0.01140 0.0113964  0.9048 0.3503
+infection_migration              1 0.00526 0.0052649  0.4180 0.5236
+teleporters:infection_migration  1 0.01537 0.0153709  1.2203 0.2794
+Residuals                       26 0.32748 0.0125956    
+"
+#no significant results
 
 #plot graph to visualise results
 plot_migration <- ggplot(migrationdata, aes(x=teleporters, y=peak_prop,
@@ -66,8 +66,10 @@ plot_migration <- ggplot(migrationdata, aes(x=teleporters, y=peak_prop,
         legend.text = element_text(size = 15),
         aspect.ratio=2/1) +
   guides(color=guide_legend(" "))
+#display graph
 plot_migration
 
+#save to computer
 ggsave("plot_migration_summary.png",dpi=300)
 
 
