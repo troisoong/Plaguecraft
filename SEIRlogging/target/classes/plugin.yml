@@ -1,0 +1,4 @@
+name: SEIRloggingPlugin
+version: 1.0
+main: me.Perrin.SEIRloggingPlugin.SEIRloggingPlugin
+api-version: 1.18
