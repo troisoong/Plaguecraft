@@ -12,6 +12,8 @@ library(car)
 library(dplyr)
 #allows plotting of residuals
 library(ggResidpanel)
+#for customising graph colour
+library(RColorBrewer)
 
 #load data
 migrationdata <- read.csv("(file pathway)",
@@ -21,8 +23,7 @@ migrationdata <- read.csv("(file pathway)",
 migrationdata$run <- as.factor(migrationdata$run)
 migrationdata$timepoint <- as.factor(migrationdata$timepoint)
 
-"create model with structure (values of interest, data table, random effects, 
-autocorrelation)" 
+#create model with glmer, including autocorrelations
 migrationmodel <- glmer(cbind(infected,non_infected) ~ teleporters + 
                        infection_migration + teleporters*infection_migration +
                        (1|run) + (1|timepoint), 
@@ -67,6 +68,7 @@ plot_migration <- ggplot(migrationdata, aes(x=teleporters, y=peak_prop,
         legend.text = element_text(size = 15),
         aspect.ratio=2/1) +
   guides(color=guide_legend(" "))
+
 #display graph
 plot_migration
 
