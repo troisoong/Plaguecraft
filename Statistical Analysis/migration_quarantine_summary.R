@@ -23,7 +23,7 @@ migrationdata <- read.csv("(file pathway)",
 migrationdata$run <- as.factor(migrationdata$run)
 migrationdata$timepoint <- as.factor(migrationdata$timepoint)
 
-#create model using glmer to correct for binomial distribution
+#create model using glm (no random effects) to correct for binomial distribution
 migrationmodel <- glm(peak_prop ~ teleporters + 
                           infection_migration + teleporters*infection_migration, 
                         data = migrationdata, family = binomial)
