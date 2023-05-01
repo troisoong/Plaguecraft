@@ -23,7 +23,7 @@ migrationdata <- read.csv("(file pathway)",
 migrationdata$run <- as.factor(migrationdata$run)
 migrationdata$timepoint <- as.factor(migrationdata$timepoint)
 
-#create model with glmer, including autocorrelations
+#create model with glmer, including autocorrelations and binomial family
 migrationmodel <- glmer(cbind(infected,non_infected) ~ teleporters + 
                        infection_migration + teleporters*infection_migration +
                        (1|run) + (1|timepoint), 
