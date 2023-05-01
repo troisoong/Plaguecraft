@@ -4,10 +4,13 @@ rm(list=ls())
 #Open libraries
 #this one is for creating plots (regressions)
 library(ggplot2)
+#these allow creation and analysis of glmer models
 library(lme4)
 library(lmerTest)
-library(dplyr)
 library(car)
+#this allows table reorganisation
+library(dplyr)
+#allows plotting of residuals
 library(ggResidpanel)
 
 #load data
