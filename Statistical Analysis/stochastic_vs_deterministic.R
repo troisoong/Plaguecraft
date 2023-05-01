@@ -3,8 +3,6 @@ rm(list=ls())
 
 #makes plots
 library(ggplot2)
-#reorganise tables
-library(dplyr)
 #shows residual plots
 library(ggResidpanel)
 #for customising graph colour
