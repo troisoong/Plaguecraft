@@ -43,7 +43,8 @@ Response: cbind(infected, non_infected)
             Chisq Df Pr(>Chisq)    
 (Intercept) 244.8  1  < 2.2e-16 ***"
 #significant effect
-#residuals suggest slightly overdispursed and QQ plot may not be correcting 
+#residuals suggest slightly overdispursed and QQ plot may not be correcting for binomial distribution.
+#HOWEVER very significant so unlikely to matter
 
 #graphs plotted with ggplot
 
