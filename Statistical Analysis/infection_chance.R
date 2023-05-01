@@ -4,64 +4,47 @@ rm(list=ls())
 #Open libraries
 #this one is for creating plots (regressions)
 library(ggplot2)
-#install package that accounts for autocorrelation
-library(nlme)
-#this package lets you logit transform for nlme, which doesn't allow family
-#link: https://stats.stackexchange.com/questions/398869/r-how-to-fit-a-glmm-in-nlme
+#these allow creation and analysis of glmer models
+library(lme4)
+library(lmerTest)
 library(car)
+#this allows table reorganisation
+library(dplyr)
+#allows plotting of residuals
+library(ggResidpanel)
+#for customising graph colour
+library(RColorBrewer)
 
 #load data
-ratedata <- read.csv("C:\\Users\\perri\\Documents\\R_Data\\SIR_infection_chance.csv",
-                      stringsAsFactors = TRUE, header=TRUE)
+ratedata <- read.csv("(file pathway)",
+                          stringsAsFactors = TRUE, header=TRUE)
 
-#logit transform output to account for binomial
-logit.prop <- logit(ratedata$proportion)
+#save timepoint and run as factors
+ratedata$run <- as.factor(ratedata$run)
+ratedata$timepoint <- as.factor(ratedata$timepoint)
 
-"create model with structure (values of interest, data table, random effects, 
-autocorrelation)" 
-ratemodel <- lme(logit.prop ~ exp(-time_to_infect), data = ratedata, 
-                 random =~ 1|run, correlation = corAR1(form =~ timepoint|run))
+#create model with glmer, including autocorrelations and binomial family
+ratemodel <- glmer(cbind(infected,non_infected) ~ -exp(chance) +
+                       (1|run) + (1|timepoint), 
+                     data = ratedata, family = binomial)
+#-exp found to be much better fit, otherwise crosses x-axis. Also gives higher p-value so less residuals.
 
-
-"-exp because fits data better (proportion dosn't go below zero and residuals a 
-TINY bit better, 0.309321 vs. 0.309403). -log worse fit with residuals of 
-0.3411896.
-"
-
-" 
-corAR1 and corCAR1 give same output
-Works because running the model without the run random effect and without 
-accounting for autocorellation makes p-value MUCH more significant"
-
-#run anova to text for correlation                 
-anova(ratemodel)
-
-#no accounting for proportions gives p-value = 0.0415
-#fitting model as -exp gives p-value = 0.0383
-#binomial model and -exp gives p-value = 0.0452
-#when method of model changed to ML p-value = 0.0375, but ML might be biased?
-
-#plot graph to visualise results
-plot_rate <- ggplot(ratedata, aes(x=time_to_infect, y=proportion,)) + 
-  geom_point() + geom_smooth(method = "lm", formula= (y ~ exp(-x)), se = FALSE) +
-  theme_bw()
-plot_rate
-
-#try to check assumptions? 
+#perform anova to test              
+Anova(ratemodel)
+#check summaries
+summary(ratemodel) 
 #standard residuals
-plot(ratemodel)
-#not consistent, larger residuals at larger fitted values
+resid_panel(ratemodel)
 
-#qq plot
-qqnorm(residuals(ratemodel), 
-       ylab="Sample Quantiles for residuals")
-qqline(residuals(ratemodel),  
-       col="red")
-#not consistent, below line at negative values and above line at positive values
+#output:
+"Analysis of Deviance Table (Type III Wald chisquare tests)
 
-#leverage vs. residuals
+Response: cbind(infected, non_infected)
+            Chisq Df Pr(>Chisq)    
+(Intercept) 244.8  1  < 2.2e-16 ***"
+#significant effect
+#residuals suggest slightly overdispursed and QQ plot may not be correcting 
 
-
-#tried running with number of infected, exact same problems. What to do?
+#graphs plotted with ggplot
 
 
