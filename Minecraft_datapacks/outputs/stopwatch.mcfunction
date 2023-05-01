@@ -23,5 +23,5 @@ execute if score counter_active Outputs = 1 Number if score infectious Outputs <
 
 #create signpost displaying information
 setblock ~-1 ~ ~ crimson_sign[rotation=4]{Color:"yellow",Text1:'{"text":"Time Since"}',Text2:'{"text":"1st Infection"}'}
-execute if block ~-2 ~ ~ run data merge block ~-1 ~ ~ {Text3:'[{"text":"Minutes:"},{"score":{"objective":"Outputs","name":"minutes"}}]'}
-execute if block ~-2 ~ ~  run data merge block ~-1 ~ ~ {Text4:'[{"text":"Seconds:"},{"score":{"objective":"Outputs","name":"seconds"}}]'}
+data merge block ~-1 ~ ~ {Text3:'[{"text":"Minutes:"},{"score":{"objective":"Outputs","name":"minutes"}}]'}
+data merge block ~-1 ~ ~ {Text4:'[{"text":"Seconds:"},{"score":{"objective":"Outputs","name":"seconds"}}]'}
