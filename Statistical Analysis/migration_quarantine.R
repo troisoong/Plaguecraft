@@ -4,14 +4,17 @@ rm(list=ls())
 #Open libraries
 #this one is for creating plots (regressions)
 library(ggplot2)
+#these allow creation and analysis of glmer models
 library(lme4)
 library(lmerTest)
-library(dplyr)
 library(car)
+#this allows table reorganisation
+library(dplyr)
+#allows plotting of residuals
 library(ggResidpanel)
 
 #load data
-migrationdata <- read.csv("C:\\Users\\perri\\Documents\\R_Data\\migration_summary.csv",
+migrationdata <- read.csv("(file pathway)",
                           stringsAsFactors = TRUE, header=TRUE)
 
 #save timepoint and run as factors
@@ -20,35 +23,33 @@ migrationdata$timepoint <- as.factor(migrationdata$timepoint)
 
 "create model with structure (values of interest, data table, random effects, 
 autocorrelation)" 
-migrationmodel <- lm(peak_prop ~ teleporters + 
-                          infection_migration + teleporters*infection_migration, 
-                        data = migrationdata, family = binomial)
+migrationmodel <- glmer(cbind(infected,non_infected) ~ teleporters + 
+                       infection_migration + teleporters*infection_migration +
+                       (1|run) + (1|timepoint), 
+                     data = migrationdata, family = binomial)
 
-
-"-exp because fits data better (proportion dosn't go below zero and residuals a 
-TINY bit better, 0.309321 vs. 0.309403). -log worse fit with residuals of 
-0.3411896.
-"
-
-" 
-corAR1 and corCAR1 give same output
-Works because running the model without the run random effect and without 
-accounting for autocorellation makes p-value MUCH more signif
-#run anova to text for correlation"                
-anova(migrationmodel)
-
-summary(migrationmodel)
-
-
-#try to check assumptions? 
+#perform anova to test              
+Anova(migrationmodel)
+#check summaries
+summary(migrationmodel) 
 #standard residuals
 resid_panel(migrationmodel)
+
+#output:
+"Analysis of Deviance Table (Type II Wald chisquare tests)
+
+Response: cbind(infected, non_infected)
+                                 Chisq Df Pr(>Chisq)  
+teleporters                     0.2554  1    0.61328  
+infection_migration             0.0228  1    0.87995  
+teleporters:infection_migration 4.2684  1    0.03883 *"
+#significant interaction detected
 
 #plot graph to visualise results
 plot_migration <- ggplot(migrationdata, aes(x=teleporters, y=peak_prop,
                                             color=infection_migration)) + 
   geom_point(size=0.7) + 
-  labs(x="Teleporters per Village", y="Peak Proportion of Population Infected") +
+  labs(x="Teleporters per Village", y="Proportion of Population Infected") +
   scale_color_manual(labels = c("Infectious Villagers Quarantined",
                                 "Infectious Villagers Free to Migrate"),values = c("#D95F02","#7570B3")) +
   geom_smooth(method = "lm", formula= (y ~ x), aes(color = infection_migration), 
@@ -66,8 +67,10 @@ plot_migration <- ggplot(migrationdata, aes(x=teleporters, y=peak_prop,
         legend.text = element_text(size = 15),
         aspect.ratio=2/1) +
   guides(color=guide_legend(" "))
+#display graph
 plot_migration
 
+#save to computer
 ggsave("plot_migration_summary.png",dpi=300)
 
 
