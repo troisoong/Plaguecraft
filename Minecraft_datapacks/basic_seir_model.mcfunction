@@ -1,10 +1,9 @@
 #code for the infection to take place
 
-#villagers become exposed if they get in range of an infectious individual or place (marked by contaminated arour stand), or if they are marked as patient zero
+#villagers become exposed if they get in range of an infectious individual or if they are marked as patient zero
 #both models
 tag @e[type=villager,tag=patient_zero] add exposed
 execute as @e[type=villager,tag=susceptible] at @s if entity @e[type=villager,tag=infectious,distance=..2] if predicate infect:exposure_chance run tag @s add exposed
-execute as @e[type=villager,tag=susceptible] at @s if entity @e[type=armor_stand,tag=contaminated,distance=..2] if predicate infect:exposure_chance run tag @s add exposed
 #just deterministic model, add effect to last ;ength of time stage should last (in this case 60 seconds)and 'true' makes makes effect invisible.
 execute as @e[type=villager,tag=!stochastic,tag=susceptible] at @s if entity @s[tag=exposed] run effect give @s minecraft:mining_fatigue 60 0 true
 #both models remove old tags
