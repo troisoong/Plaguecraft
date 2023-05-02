@@ -6,13 +6,7 @@ execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parame
 execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parameter = 3 Parameter if predicate variable:5_sec if entity @e[type=villager,tag=infected,distance=..2] run tag @s add exposed
 execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parameter = 4 Parameter if predicate variable:10_sec if entity @e[type=villager,tag=infected,distance=..2] run tag @s add exposed
 execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parameter = 5 Parameter if predicate variable:0.5_min if entity @e[type=villager,tag=infected,distance=..2] run tag @s add exposed
-#tag villagers as exposed if they encounter other disease sources
-execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parameter = 1 Parameter if predicate variable:0_min if entity @e[type=armor_stand,tag=contaminated,distance=..3] run tag @s add exposed
-execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parameter = 2 Parameter if predicate variable:1_sec if entity @e[type=armor_stand,tag=contaminated,distance=..3] run tag @s add exposed
-execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parameter = 3 Parameter if predicate variable:5_sec if entity @e[type=armor_stand,tag=contaminated,distance=..3] run tag @s add exposed
-execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parameter = 4 Parameter if predicate variable:10_sec if entity @e[type=armor_stand,tag=contaminated,distance=..3] run tag @s add exposed
-execute as @e[type=villager,tag=susceptible] at @s if score exposure_rate Parameter = 5 Parameter if predicate variable:0.5_min if entity @e[type=armor_stand,tag=contaminated,distance=..3] run tag @s add exposed
-#these are the same for both stochastic and deterministic models as it controls chance of catching disease and is difficult to replicate a deterministic equivalent
+#this is the same for both stochastic and deterministic models as it controls chance of catching disease and is difficult to replicate a deterministic equivalent
 
 #set how long exposed stage lasts in deterministic model by applying effects. Note lowest setting is no time at all so there is no effect applied
 execute as @e[type=villager,tag=!stochastic,tag=susceptible] at @s if entity @s[tag=exposed] @s if score infectious_rate Parameter = 2 Parameter run effect give @s minecraft:mining_fatigue 60 0 true
